@@ -1,5 +1,6 @@
 let game_W = 0, game_H = 0;
 A = [];
+color = [];
 class game {
     constructor() {
         this.canvas = null;
@@ -23,7 +24,11 @@ class game {
                 var x = evt.touches[i].pageX;
                 var y = evt.touches[i].pageY;
                 A.push({x, y});
-                console.log(A);
+                color.push(Math.floor(Math.random()*16777215).toString(16));
+                if (A.length > 200) {
+                    A.splice(0, 1);
+                    color.splice(0, 1);
+                }
             }
         })
 
@@ -67,13 +72,13 @@ class game {
     draw() {
         this.clearScreen();
         for (let i = 0; i < A.length; i++)
-            this.drawCircle(A[i].x, A[i].y);
+            this.drawCircle(A[i].x, A[i].y, color[i]);
     }
 
-    drawCircle(x, y) {
-        this.context.strokeStyle = '#FF0000';
+    drawCircle(x, y, cl) {
+        this.context.strokeStyle = '#' + cl;
         this.context.beginPath();
-        this.context.arc(x, y, 50, 0, 2 * Math.PI);
+        this.context.arc(x, y, 30, 0, 2 * Math.PI);
         this.context.stroke();
     }
 }
