@@ -1,5 +1,5 @@
 let game_W = 0, game_H = 0;
-
+A = [];
 class game {
     constructor() {
         this.canvas = null;
@@ -19,15 +19,20 @@ class game {
 
     listenTouch() {
         document.addEventListener("touchmove", evt => {
-            for (let i = 0; i < touches.length; i++) {
+            for (let i = 0; i < evt.touches.length; i++) {
                 var x = evt.touches[i].pageX;
                 var y = evt.touches[i].pageY;
-                console.log(x, ' ', y);
+                A.push({x, y});
+                console.log(A);
             }
         })
 
         document.addEventListener("touchstart", evt => {
-            
+            for (let i = 0; i < evt.touches.length; i++) {
+                var x = evt.touches[i].pageX;
+                var y = evt.touches[i].pageY;
+                this.drawCircle(x, y);
+            }
         })
 
         document.addEventListener("touchend", evt => {    
@@ -53,8 +58,23 @@ class game {
         game_H = this.canvas.height;
     }
 
+    clearScreen() {
+        this.context.clearRect(0, 0, game_W, game_H);
+        this.context.fillStyle = "#000000";
+        this.context.fillRect(0, 0, game_W, game_H);
+    }
+
     draw() {
-        
+        this.clearScreen();
+        for (let i = 0; i < A.length; i++)
+            this.drawCircle(A[i].x, A[i].y);
+    }
+
+    drawCircle(x, y) {
+        this.context.strokeStyle = '#FF0000';
+        this.context.beginPath();
+        this.context.arc(x, y, 50, 0, 2 * Math.PI);
+        this.context.stroke();
     }
 }
 
