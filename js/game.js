@@ -25,7 +25,7 @@ class game {
                 var y = evt.touches[i].pageY;
                 A.push({x, y});
                 color.push(Math.floor(Math.random()*16777215).toString(16));
-                if (A.length > 200) {
+                if (A.length > 100) {
                     A.splice(0, 1);
                     color.splice(0, 1);
                 }
@@ -41,7 +41,8 @@ class game {
         })
 
         document.addEventListener("touchend", evt => {    
-            this.draw();
+            A = [];
+            color = [];
         })
     }
 
@@ -78,7 +79,7 @@ class game {
     drawCircle(x, y, cl) {
         this.context.strokeStyle = '#' + cl;
         this.context.beginPath();
-        this.context.arc(x, y, 30, 0, 2 * Math.PI);
+        this.context.arc(x, y, 20, 0, 2 * Math.PI);
         this.context.stroke();
     }
 }
